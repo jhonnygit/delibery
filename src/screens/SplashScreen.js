@@ -1,7 +1,7 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { View,Text,StyleSheet } from "react-native";
-import { Colors,Images } from "../contants";
+import { View,Text,StyleSheet,StatusBar,Image} from "react-native";
+import { Colors,Images,Fonts} from "../contants";
+import { Display } from "../utils";
 
 const SplashScreen=()=>{
     return(
@@ -25,16 +25,18 @@ const styles=StyleSheet.create({
     container:{
         flex:1,
         justifyContent:'center',
-        alignItems:"center"
+        alignItems:"center",
+        backgroundColor:Colors.DEFAULT_GREEN,
     },
     image:{
-        height:150,
-        width:150,
+        height:Display.setHeight(30),
+        width:Display.setWidth(60),
     },
     titleText:{
         color:Colors.DEFAULT_WHITE,
         fontSize:32,
-    }
+        fontFamily:Fonts.POPPINS_SEMI_BOLD,
+    },
 
 });
 
