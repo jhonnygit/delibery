@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, StatusBar,TextInput, TouchableOpacity, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather'
-import { Separator } from '../components';
+import { Separator, ToggleButton } from '../components';
 import { Colors, Fonts,Images } from '../contants';
 import { Display } from '../utils';
 
 // create a component
 const SigninScreen = ({navigation}) => {
+    const [isPasswordShow,setIsPasswordShow]=useState(false);
     return (
         <View style={styles.container}>
             <StatusBar 
@@ -52,23 +53,25 @@ const SigninScreen = ({navigation}) => {
                         style={{marginRight:10}}
                     />                    
                     <TextInput 
-                        secureTextEntry={true}
+                        secureTextEntry={isPasswordShow?false:true}
                         placeholder='Password'
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
                     />
                     <Feather
-                        name="eye"
+                        name={isPasswordShow? 'eye':'eye-off'}
                         size={22}
                         color={Colors.DEFAULT_GREY}
                         style={{marginRight:10}}
+                        onPress={() => setIsPasswordShow(!isPasswordShow)}
                     />
                 </View>
             </View>
             <Text></Text>
             <View style={styles.forgotPasswordContainer}>
-                <View>
+                <View style={styles.toggleContainer}>
+                    <ToggleButton size={0.5} />
                     <Text style={styles.rememberMeText}>Remember me</Text>                    
                 </View>
                 <Text style={styles.forgotPasswordText}>Forgot password</Text>
@@ -259,6 +262,10 @@ const styles = StyleSheet.create({
         lineHeight:13*1.4,
         fontFamily:Fonts.POPPINS_MEDIUM,
     },
+    toggleContainer:{
+        flexDirection:'row',
+        alignItems:'center',
+    }
 
 });
 

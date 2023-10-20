@@ -66,7 +66,7 @@ const welcomeScreen = ({navigation}) => {
             <Separator height={Display.setHeight(8)} />
             <Pagination index={welcomeListIndex} />
             <Separator height={Display.setHeight(8)} />
-            {welcomeListIndex=== 2 ?(
+            {welcomeListIndex=== 2 ?(                               
                 <TouchableOpacity 
                     style={styles.gettingStartedButton}
                     activeOpacity={0.8}
@@ -135,11 +135,12 @@ const styles = StyleSheet.create({
     gettingStartedButton:{
         backgroundColor:Colors.DEFAULT_GREEN,
         paddingVertical:5,
+        marginTop:10,        
         paddingHorizontal:50,
         borderRadius:8,
         justifyContent:'center',
         alignItems:'center',
-        elevation:2,
+        elevation:1,
     },
     gettingStartedButtonText:{
         fontSize:20,
