@@ -74,7 +74,9 @@ const SigninScreen = ({navigation}) => {
                     <ToggleButton size={0.5} />
                     <Text style={styles.rememberMeText}>Remember me</Text>                    
                 </View>
-                <Text style={styles.forgotPasswordText}>Forgot password</Text>
+                <Text style={styles.forgotPasswordText}
+                onPress={()=>{navigation.navigate('ForgotPassword')}}>
+                    Forgot password</Text>
             </View>
             <TouchableOpacity style={styles.signinButton}>
                 <Text style={styles.signinButtonText}>Sign In</Text>
