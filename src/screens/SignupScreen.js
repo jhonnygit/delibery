@@ -1,13 +1,14 @@
-import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, StatusBar,TextInput, TouchableOpacity, Image } from 'react-native';
+//import liraries
+import React,{useState} from 'react';
+import { View, Text, StyleSheet,StatusBar,TextInput, TouchableOpacity, Image } from 'react-native';
+import { Colors, Fonts,Images} from '../contants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather'
-import { Separator, ToggleButton } from '../components';
-import { Colors, Fonts,Images } from '../contants';
+import { Separator} from '../components';
 import { Display } from '../utils';
+import Feather from 'react-native-vector-icons/Feather';
 
 // create a component
-const SigninScreen = ({navigation}) => {
+const SignupScreen = ({navigation}) => {
     const [isPasswordShow,setIsPasswordShow]=useState(false);
     return (
         <View style={styles.container}>
@@ -25,8 +26,8 @@ const SigninScreen = ({navigation}) => {
                 />
                 <Text style={styles.headerTitle}>Sign In</Text>
             </View>
-            <Text style={styles.title}>Welcome</Text>
-            <Text style={styles.content}>Enter your username and password, and enjoy ordering food!</Text>
+            <Text style={styles.title}>Create Account</Text>
+            <Text style={styles.content}>Enter your email, Choose a username and password</Text>
             <View style={styles.inputContainer}>
                 <View style={styles.inputSubContainer}>
                     <Feather 
@@ -36,7 +37,24 @@ const SigninScreen = ({navigation}) => {
                         style={{marginRight:10}}
                     />
                     <TextInput
-                        placeholder='username'
+                        placeholder='Username'
+                        placeholderTextColor={Colors.DEFAULT_GREY}
+                        selectionColor={Colors.DEFAULT_GREY}
+                        style={styles.inputText}
+                    />
+                </View>
+            </View>
+            <Separator height={15}/>
+            <View style={styles.inputContainer}>
+                <View style={styles.inputSubContainer}>
+                    <Feather 
+                        name="mail"
+                        size={22}
+                        color={Colors.DEFAULT_GREY}
+                        style={{marginRight:10}}
+                    />
+                    <TextInput
+                        placeholder='Email'
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
@@ -68,22 +86,10 @@ const SigninScreen = ({navigation}) => {
                     />
                 </View>
             </View>
-            <Text></Text>
-            <View style={styles.forgotPasswordContainer}>
-                <View style={styles.toggleContainer}>
-                    <ToggleButton size={0.5} />
-                    <Text style={styles.rememberMeText}>Remember me</Text>                    
-                </View>
-                <Text style={styles.forgotPasswordText}>Forgot password</Text>
-            </View>
             <TouchableOpacity style={styles.signinButton}>
-                <Text style={styles.signinButtonText}>Sign In</Text>
+                <Text style={styles.signinButtonText}>Create Account</Text>
             </TouchableOpacity>
-            <View style={styles.signupContainer}>
-                <Text style={styles.accountText}>Don’t have an account?</Text>
-                <Text style={styles.signupText}
-                onPress={()=>navigation.navigate('Signup')}> Sign Up</Text>
-            </View>
+            <Text></Text>
             <Text style={styles.orText}>Or</Text>
             <TouchableOpacity style={styles.facebookButton}>
                 <View style={styles.socialButtonsContainer}>
@@ -101,7 +107,6 @@ const SigninScreen = ({navigation}) => {
                     <Text style={styles.socialSigninButtonText}>Connect with Google</Text>
                 </View>
             </TouchableOpacity>
-
         </View>
     );
 };
@@ -109,8 +114,8 @@ const SigninScreen = ({navigation}) => {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor:Colors.DEFAULT_WHITE,       
+        flex: 1,        
+        backgroundColor: Colors.DEFAULT_WHITE,
     },
     headerContainer:{
         flexDirection:'row',
@@ -161,61 +166,22 @@ const styles = StyleSheet.create({
         color:Colors.DEFAULT_BLACK,
         flex:1,
     },
-    forgotPasswordContainer:{
-        marginHorizontal:20,
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'space-between',
-    },
-    rememberMeText:{
-        marginLeft:10,
-        fontSize:12,
-        lineHeight:12*1.4,
-        color:Colors.DEFAULT_GREY,
-        fontFamily:Fonts.POPPINS_MEDIUM,
-    },
-    forgotPasswordText:{
-        fontSize:12,
-        lineHeight:12*1.4,
-        color:Colors.DEFAULT_GREY,
-        fontFamily:Fonts.POPPINS_BOLD,
-    },
     signinButton:{
-       backgroundColor:Colors.DEFAULT_GREEN,
-       borderRadius:8,
-       marginHorizontal:20,
-       height:Display.setHeight(6),
-       justifyContent:'center',
-       alignItems:'center',
-       marginTop:20, 
-    },
-    signinButtonText:{
-        fontSize:18,
-        lineHeight:18*1.4,
-        color:Colors.DEFAULT_WHITE,
-        fontFamily:Fonts.POPPINS_MEDIUM,
-    },
-    signupContainer:{
+        backgroundColor:Colors.DEFAULT_GREEN,
+        borderRadius:8,
         marginHorizontal:20,
+        height:Display.setHeight(6),
         justifyContent:'center',
-        paddingVertical:20,
-        flexDirection:'row',
         alignItems:'center',
-    },
-    accountText:{
-        fontSize:13,
-        lineHeight:13*1.4,
-        color:Colors.DEFAULT_BLACK,
-        fontFamily:Fonts.POPPINS_MEDIUM,
-    },
-    signupText:{
-        fontSize:13,
-        lineHeight:13*1.4,
-        color:Colors.DEFAULT_GREEN,
-        fontFamily:Fonts.POPPINS_MEDIUM,
-        marginLeft:5,
-    },
-    orText:{
+        marginTop:20, 
+     },
+     signinButtonText:{
+         fontSize:18,
+         lineHeight:18*1.4,
+         color:Colors.DEFAULT_WHITE,
+         fontFamily:Fonts.POPPINS_MEDIUM,
+     },
+     orText:{
         fontSize:15,
         lineHeight:15*1.4,
         color:Colors.DEFAULT_BLACK,
@@ -263,12 +229,7 @@ const styles = StyleSheet.create({
         lineHeight:13*1.4,
         fontFamily:Fonts.POPPINS_MEDIUM,
     },
-    toggleContainer:{
-        flexDirection:'row',
-        alignItems:'center',
-    }
-
 });
 
 //make this component available to the app
-export default SigninScreen;
+export default SignupScreen;
