@@ -3,13 +3,106 @@ import React,{useState} from 'react';
 import { View, Text, StyleSheet,StatusBar,TextInput, TouchableOpacity, Image } from 'react-native';
 import { Colors, Fonts,Images} from '../contants';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Separator} from '../components';
 import { Display } from '../utils';
 import Feather from 'react-native-vector-icons/Feather';
+import { AuthenticationService } from '../services';
+import LottieView from 'lottie-react-native';
+
+const inputStyle=state=>{
+    switch(state){        
+        case 'valid':
+            return {...styles.inputContainer,borderWidth:1,borderColor:Colors.SECONDARY_GREEN}
+        case 'invalid':
+            return {...styles.inputContainer,borderWidth:1,borderColor:Colors.DEFAULT_RED}
+        default:
+            return styles.inputContainer;
+    }
+}
+
+const showMarker=state=>{
+    switch(state){        
+        case 'valid':
+            return (
+                <AntDesign
+                    name="checkcircleo"
+                    color={Colors.SECONDARY_GREEN}
+                    size={18}
+                    style={{marginLeft:5}}
+                />
+            );
+        case 'invalid':
+            return (
+                <AntDesign
+                    name="closecircleo"
+                    color={Colors.DEFAULT_RED}
+                    size={18}
+                    style={{marginLeft:5}}
+                />
+            );
+        default:
+            return null;
+    }
+}
 
 // create a component
 const SignupScreen = ({navigation}) => {
     const [isPasswordShow,setIsPasswordShow]=useState(false);
+    const [username,setUsername]=useState('');
+    const [email,setEmail]=useState('');
+    const [password,setPassword]=useState('');
+    const [errorMessage,setErrorMessage]=useState('');
+    const [isLoading,setIsLoading]=useState(false);
+    const [emailErrorMessage,setEmailErrorMessage]=useState('');
+    const [usernameErrorMessage,setUsernameErrorMessage]=useState('');
+    const [emailState,setEmailState]=useState('default');
+    const [usernameState,setUsernameState]=useState('default');
+    
+    const register=()=>{
+        let user={
+            username,
+            email,
+            password,
+        }
+        console.log(user);
+        setIsLoading(true);        
+        AuthenticationService.register(user).then(response=>{
+            setIsLoading(false);
+            console.log(response);
+            if(!response?.status){
+                setErrorMessage(response?.message);
+            }
+        });
+        //navigation.navigate('RegisterPhone')
+    };
+
+    const checkUserExist=async (type,value)=>{
+        if(value?.length >0){
+            AuthenticationService.checkUserExist(type,value).then(response=>{
+                if(response?.status){
+                   type==='email' && emailErrorMessage
+                   ?  setEmailErrorMessage('') 
+                   : null;
+                   type==='username' && usernameErrorMessage
+                   ?  setUsernameErrorMessage('') 
+                   : null;
+                   type==='email'?setEmailState('valid'):null;
+                   type==='username'?setUsernameState('valid'):null;
+                }else{
+                    type==='email'
+                    ?  setEmailErrorMessage(response?.message) 
+                    : null;
+                    type==='username'
+                    ?  setUsernameErrorMessage(response?.message) 
+                    : null;
+                    type==='email'?setEmailState('invalid'):null;
+                    type==='username'?setUsernameState('invalid'):null;
+                }
+            });
+        }
+    };
+
     return (
         <View style={styles.container}>
             <StatusBar 
@@ -28,7 +121,7 @@ const SignupScreen = ({navigation}) => {
             </View>
             <Text style={styles.title}>Create Account</Text>
             <Text style={styles.content}>Enter your email, Choose a username and password</Text>
-            <View style={styles.inputContainer}>
+            <View style={inputStyle(usernameState)}>
                 <View style={styles.inputSubContainer}>
                     <Feather 
                         name="user"
@@ -41,11 +134,15 @@ const SignupScreen = ({navigation}) => {
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
+                        onChangeText={(text)=>setUsername(text)}
+                        onEndEditing={({nativeEvent:{text}})=>checkUserExist('username',text)}
                     />
+                    {showMarker(usernameState)}
                 </View>
             </View>
+            <Text style={styles.errorMessage}>{usernameErrorMessage}</Text>
             <Separator height={15}/>
-            <View style={styles.inputContainer}>
+            <View style={inputStyle(emailState)}>
                 <View style={styles.inputSubContainer}>
                     <Feather 
                         name="mail"
@@ -58,10 +155,14 @@ const SignupScreen = ({navigation}) => {
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
+                        onChangeText={(text)=>setEmail(text)}
+                        onEndEditing={({nativeEvent:{text}})=>checkUserExist('email',text)}
                     />
+                    {showMarker(emailState)}
                 </View>
             </View>
             <Separator height={15}/>
+            <Text style={styles.errorMessage}>{emailErrorMessage}</Text>
             <View style={styles.inputContainer}>
                 <View style={styles.inputSubContainer}>
                     <Feather
@@ -76,6 +177,7 @@ const SignupScreen = ({navigation}) => {
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
+                        onChangeText={(text)=>setPassword(text)}
                     />
                     <Feather
                         name={isPasswordShow? 'eye':'eye-off'}
@@ -86,8 +188,14 @@ const SignupScreen = ({navigation}) => {
                     />
                 </View>
             </View>
-            <TouchableOpacity style={styles.signinButton} onPress={()=>navigation.navigate("RegisterPhone")}>
-                <Text style={styles.signinButtonText}>Create Account</Text>
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+            <TouchableOpacity 
+                style={styles.signinButton} onPress={()=>register()}>
+                {isLoading ? (
+                        <LottieView source={Images.LOADING} autoPlay/>                        
+                    ) : (
+                    <Text style={styles.signinButtonText}>Create Account</Text>
+                )}  
             </TouchableOpacity>
             <Text></Text>
             <Text style={styles.orText}>Or</Text>
@@ -228,6 +336,14 @@ const styles = StyleSheet.create({
         fontSize:13,
         lineHeight:13*1.4,
         fontFamily:Fonts.POPPINS_MEDIUM,
+    },
+    errorMessage:{
+        fontSize:10,
+        lineHeight:10*1.4,
+        color:Colors.DEFAULT_RED,
+        fontFamily:Fonts.POPPINS_MEDIUM,
+        marginHorizontal:20,
+        marginTop:5,
     },
 });
 
