@@ -8,14 +8,20 @@ import {
     ForgotPasswordScreen,
     RegisterPhoneScreen,
     VerificationScreen,
+    HomeScreen,
  } from "../screens";
+
+ import {connect} from 'react-redux';
 
 const stack=createStackNavigator();
 
-const Navigators=()=>{
+const Navigators=({token})=>{
+    console.log(token);
     return(
         <NavigationContainer>
-            <stack.Navigator screenOptions={{headerShown:false}}>                
+            <stack.Navigator screenOptions={{headerShown:false}}>
+            {!token ? (
+            <>  
                 <stack.Screen name="Splash" component={SplashScreen}/>
                 <stack.Screen name="Welcome" component={WelcomeScreen}/>
                 <stack.Screen name="Signin" component={SigninScreen}/>
@@ -23,9 +29,19 @@ const Navigators=()=>{
                 <stack.Screen name="ForgotPassword" component={ForgotPasswordScreen}/>
                 <stack.Screen name="RegisterPhone" component={RegisterPhoneScreen}/>
                 <stack.Screen name="Verification" component={VerificationScreen}/>
+            </>            
+            ):(
+                <stack.Screen name='Home' component={HomeScreen} />
+            )}
             </stack.Navigator>
         </NavigationContainer>
     );
 };
 
-export default Navigators;
+const mapStateToProps=state=>{
+    return{
+        token:state.generalState.token,
+    };
+};
+
+export default connect(mapStateToProps)(Navigators);

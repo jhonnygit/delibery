@@ -134,7 +134,7 @@ const SignupScreen = ({navigation}) => {
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
-                        onChangeText={(text)=>setUsername(text)}
+                        onChangeText={text=>setUsername(text)}
                         onEndEditing={({nativeEvent:{text}})=>checkUserExist('username',text)}
                     />
                     {showMarker(usernameState)}
@@ -155,7 +155,7 @@ const SignupScreen = ({navigation}) => {
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
-                        onChangeText={(text)=>setEmail(text)}
+                        onChangeText={text=>setEmail(text)}
                         onEndEditing={({nativeEvent:{text}})=>checkUserExist('email',text)}
                     />
                     {showMarker(emailState)}
@@ -177,7 +177,7 @@ const SignupScreen = ({navigation}) => {
                         placeholderTextColor={Colors.DEFAULT_GREY}
                         selectionColor={Colors.DEFAULT_GREY}
                         style={styles.inputText}
-                        onChangeText={(text)=>setPassword(text)}
+                        onChangeText={text=>setPassword(text)}
                     />
                     <Feather
                         name={isPasswordShow? 'eye':'eye-off'}

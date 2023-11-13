@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, {useState } from 'react';
 import { View, Text, StyleSheet, StatusBar,TextInput, TouchableOpacity, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather'
@@ -7,9 +7,11 @@ import { Colors, Fonts,Images } from '../contants';
 import { Display } from '../utils';
 import { AuthenticationService } from '../services';
 import LottieView from 'lottie-react-native';
+import {connect} from 'react-redux';
+import { GeneralAction} from '../actions';
 
 // create a component
-const SigninScreen = ({navigation}) => {
+const SigninScreen = ({navigation,setToken}) => {
     const [isPasswordShow,setIsPasswordShow]=useState(false);
     const [username,setUsername]=useState('');
     const [password,setPassword]=useState('');
@@ -19,10 +21,12 @@ const SigninScreen = ({navigation}) => {
     const signIn=async()=>{
         setIsLoading(true);
         let user={
-            username,password
+            username,
+            password,
         }
         AuthenticationService.login(user).then(response=>{
             setIsLoading(false);
+            setToken(response?.data);
             console.log(response);
             if(!response?.status){
                setErrorMessage(response?.message); 
@@ -311,5 +315,11 @@ const styles = StyleSheet.create({
 
 });
 
+const mapDispatchToProps=dispatch=>{
+    return{
+        setToken:token=>dispatch(GeneralAction.setToken(token)),
+    };
+};
+
 //make this component available to the app
-export default SigninScreen;
+export default connect(null,mapDispatchToProps)(SigninScreen);
