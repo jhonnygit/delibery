@@ -5,33 +5,38 @@ import Feather from 'react-native-vector-icons/Feather'
 import { Separator, ToggleButton } from '../components';
 import { Colors, Fonts,Images } from '../contants';
 import { Display } from '../utils';
-import { AuthenticationService } from '../services';
+import { AuthenticationService, StorageService } from '../services';
 import LottieView from 'lottie-react-native';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import { GeneralAction} from '../actions';
 
 // create a component
-const SigninScreen = ({navigation,setToken}) => {
+const SigninScreen = ({navigation}) => {
     const [isPasswordShow,setIsPasswordShow]=useState(false);
     const [username,setUsername]=useState('');
     const [password,setPassword]=useState('');
     const [isLoading,setIsLoading]=useState(false);
     const [errorMessage,setErrorMessage]=useState('');
 
+    const dispatch=useDispatch();
+
     const signIn=async()=>{
         setIsLoading(true);
         let user={
             username,
             password,
-        }
+        };
         AuthenticationService.login(user).then(response=>{
-            setIsLoading(false);
-            setToken(response?.data);
+            setIsLoading(false);            
             console.log(response);
             if(!response?.status){
+                StorageService.setToken(response?.data).then(()=>{
+                    dispatch(GeneralAction.setToken(response?.data))
+                })
+            }else{
                setErrorMessage(response?.message); 
             }
-        })
+        });
     };
 
     return (
@@ -315,11 +320,4 @@ const styles = StyleSheet.create({
 
 });
 
-const mapDispatchToProps=dispatch=>{
-    return{
-        setToken:token=>dispatch(GeneralAction.setToken(token)),
-    };
-};
-
-//make this component available to the app
-export default connect(null,mapDispatchToProps)(SigninScreen);
+export default SigninScreen;
