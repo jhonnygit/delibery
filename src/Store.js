@@ -2,7 +2,9 @@ import {createStore,applyMiddleware} from 'redux';
 import Reducers from './reducers';
 import thunk from 'redux-thunk';
 
-const store=createStore(Reducers,applyMiddleware(thunk));
+const Store=createStore(Reducers,applyMiddleware(thunk));
+
+const getToken=()=>Store?.getState()?.generalState?.token;
 
 
-export default store;
+export {Store,getToken};
