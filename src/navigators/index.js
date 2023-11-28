@@ -9,6 +9,7 @@ import {
     RegisterPhoneScreen,
     VerificationScreen,
     HomeScreen,
+    RestaurantScreen,
  } from "../screens";
 
 import {useSelector,useDispatch} from 'react-redux';
@@ -45,7 +46,10 @@ const Navigators=()=>{
                 <stack.Screen name="Verification" component={VerificationScreen}/>
             </>            
             ):(
+                <>
                 <stack.Screen name='Home' component={HomeScreen} />
+                <stack.Screen name='Home' component={RestaurantScreen} />
+                </>
             )}
             </stack.Navigator>
         </NavigationContainer>
