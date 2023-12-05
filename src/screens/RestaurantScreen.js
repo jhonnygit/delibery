@@ -64,6 +64,7 @@ const RestaurantScreen = ({
   const [restaurant, setRestaurant] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   //const [isBookmarked, setIsBookmarked] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     RestaurantService.getOneRestaurantById(restaurantId).then(response => {
@@ -72,7 +73,7 @@ const RestaurantScreen = ({
     });
   }, []);
 
-  const dispatch = useDispatch();
+   
   const isBookmarked = useSelector(
     state =>
       state?.bookmarkState?.bookmarks?.filter(

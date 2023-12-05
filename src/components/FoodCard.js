@@ -15,9 +15,14 @@ const FoodCard = ({id, name, description, price, image, navigate}) => {
       state?.cartState?.cart?.cartItems?.find(item => item?.foodId === id)
         ?.count,
   );
+  
+  const cart=useSelector(state=>state?.cartState?.cart);
   const addToCart = foodId => dispatch(CartAction.addToCart({foodId}));
   const removeFromCart = foodId =>
     dispatch(CartAction.removeFromCart({foodId}));
+
+    
+    
 
   return (
     <View style={styles.container}>
