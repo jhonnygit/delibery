@@ -10,6 +10,7 @@ import {
     VerificationScreen,
     HomeScreen,
     RestaurantScreen,
+    FoodScreen,
  } from "../screens";
 import BottomTabs from "./BottomTabs";
 import {useSelector,useDispatch} from 'react-redux';
@@ -49,6 +50,7 @@ const Navigators=()=>{
                 <>
                 <stack.Screen name='HomeTabs' component={BottomTabs} />
                 <stack.Screen name='Home' component={RestaurantScreen} />
+                <stack.Screen name='Food' component={FoodScreen} />
                 </>
             )}
             </stack.Navigator>

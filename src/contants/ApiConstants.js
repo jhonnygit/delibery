@@ -22,7 +22,8 @@ const BACKEND_API={
   USER:'/user',
   REFRESH_TOKEN:'/refresh-token',
   RESTAURANT:'/restaurant',
-  CART:'/cart',  
+  CART:'/cart',
+  FOOD:'/food',  
 };
   
  export default {COUNTRY_FLAG,STATIC_IMAGE,BACKEND_API};
