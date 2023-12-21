@@ -6,6 +6,7 @@ import CategoryMenuItem from "./CategoryMenuItem";
 import RestaurantCard from "./RestaurantCard";
 import RestaurantMediumCard from "./RestaurantMediumCard";
 import FoodCard from "./FoodCard";
+import BookmarkCard from "./BookmarkCard";
 
 export {
     WelcomeCard,
@@ -16,4 +17,5 @@ export {
     RestaurantCard,
     RestaurantMediumCard,
     FoodCard,
+    BookmarkCard,
 };

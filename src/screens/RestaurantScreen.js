@@ -73,6 +73,13 @@ const RestaurantScreen = ({
     });
   }, []);
 
+ /*  const itemCount = useSelector(
+    state =>
+      state?.bookmarkState?.bookmarks?.filter(
+        item => item?.restaurantId === restaurantId,
+      )?.length > 0,
+  ); */
+
    
   const isBookmarked = useSelector(
     state =>
