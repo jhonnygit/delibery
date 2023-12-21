@@ -31,6 +31,13 @@ const setIsFirstTimeUse=()=>{
     };
 };
 
+const setUserData = userData => {
+    return {
+      type: types.SET_USER_DATA,
+      payload: userData,
+    };
+};
+
 
 const appStart=()=>{
     return (dispatch,getState)=>{
@@ -101,4 +108,11 @@ const appStart=()=>{
     };
 };
 
-export default {setIsAppLoading,setToken,appStart,setIsFirstTimeUse,types};
+export default {
+    setIsAppLoading,
+    setToken,
+    appStart,
+    setIsFirstTimeUse,
+    setUserData,
+    types
+};
